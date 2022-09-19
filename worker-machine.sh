@@ -39,6 +39,9 @@ sudo swapoff -a
 # Comment out string "swapfile" in fstab file if it's present, to disable swap settings
 sed -i "s/swapfile/#swapfile/" /etc/fstab
 
+# Setting up the kubeconfig variable
+export KUBECONFIG=/etc/kubernetes/admin.conf
+
 # Your nodes must have unique hostnames for easier identification. If you are deploying a cluster with many nodes, you can set it to identify names for your worker nodes such as node-1, node-2, etc. As we had mentioned earlier, we have named our nodes as kubernetes-master and kubernetes-worker. We have set them at the time of creating the server. However, you can adjust or set yours if you had not already done so from the command line. To adjust the hostname on the master node, run the following command:
 sudo hostnamectl set-hostname kubernetes-worker
 
