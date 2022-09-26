@@ -37,15 +37,15 @@ if [ "$choice" = "2" ] || [ "$choice" = "3" ] ; then
 
     # kubelet – an agent that runs on each node and handles communication with the master node to initiate workloads in the container runtime.
     # Enter the following command to install kubelet:
-    sudo apt install kubelet
+    sudo apt install -y kubelet
 
     # kubeadm – part of the Kubernetes project and helps initialize a Kubernetes cluster.
     # Enter the following command to install the kubeadm:
-    sudo apt install kubeadm
+    sudo apt install -y kubeadm
 
     # kubectl – the Kubernetes command-line tool that allows you to run commands inside the Kubernetes clusters.
     # Execute the following command to install kubectl:
-    sudo apt install kubectl
+    sudo apt install -y kubectl
 
     # kubernetes-cni – enables networking within the containers ensuring containers can communicate and exchange data.
     # Execute the following command to install:
@@ -59,18 +59,18 @@ if [ "$choice" = "2" ] || [ "$choice" = "3" ] ; then
     sed -i "s/swapfile/#swapfile/" /etc/fstab
 
     # Your nodes must have unique hostnames for easier identification.
-    # If you are deploying a cluster with many nodes, you can set it to identify names for your worker nodes such as node-1, node-2, etc.
-    # As we had mentioned earlier, we have named our nodes as kubernetes-master and kubernetes-worker.
-    # We have set them at the time of creating the server. However, you can adjust or set yours if you had not already done so from the command line.
-    echo -n "Please, specify node hostname.
-    All node hostnames should be unique.
-    If you want to keep the current one, don't type anything and press ENTER."
-    read hostname
+    echo -n "Do you want to specify hostname?(Y/n)"
+    read specify_hostname
+    if [ "$specify_hostname" = "Y" ] || [ "$specify_hostname" = "y" ]
+        echo -n "All node hostnames should be unique."
+        echo -n "If you want to keep the current one, don't type anything and press ENTER."
+        read hostname
 
-    if [ -n "$hostname"]; then
-        # To adjust the hostname on the master node, run the following command:
-        sudo hostnamectl set-hostname $hostname
-    fi
+        if [ -n "$hostname"]; then
+            # To adjust the hostname on the master node, run the following command:
+            sudo hostnamectl set-hostname $hostname
+        fi
+     fi
 
     # For the master and worker nodes to correctly see bridged traffic, you should ensure net.bridge.bridge-nf-call-iptables is set to 1 in your config.
     # First, ensure the br_netfilter module is loaded. You can confirm this by issuing the command:
